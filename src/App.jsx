@@ -2,7 +2,8 @@ import './styles/App.css'
 import SearchBar from './components/SearchBar.jsx'
 import SearchResults from './components/SearchResults.jsx'
 import Playlist from './components/Playlist.jsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { requestAccessToken } from './api/api.js'
 
 const Data = [
   {
@@ -49,6 +50,14 @@ function App() {
       return prev.filter((prevTrack, index) => index !== trackIndex);
     });
   }
+
+  useEffect(() => {
+    requestAccessToken().then((response) => {
+      console.log(response)
+      localStorage.setItem("access_token", response);
+    });
+    
+  }, [])
 
 
   return (
