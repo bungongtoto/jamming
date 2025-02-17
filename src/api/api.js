@@ -1,6 +1,7 @@
 import { clientId, clientSecret } from "./credentials";
 
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
+const endpoint = "https://api.spotify.com/v1/search"
 
 const requestAccessToken = async () => {
 
@@ -16,12 +17,42 @@ const requestAccessToken = async () => {
         if (response.ok) {
             const data = await response.json();
             return data.access_token;
-        }else {
-            throw new Error("Network Error")
         }
     } catch (error) {
         console.log(error)
     }
 }
 
-export {requestAccessToken}
+const searchSpotify = async (searchInput, artistInput, albumInput) =>{
+    const accessToken = localStorage.getItem("access_token");
+    let requestEndpoint = '';
+    let q = "?q="+searchInput+"&type=track";
+    requestEndpoint = endpoint+q;
+    try {
+        const response = await fetch(requestEndpoint, {
+            method: "GET",
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        });
+
+        if (response.ok) {
+            const responseJSON = await response.json();
+            const tracklist = responseJSON.tracks.items.map((track) => {
+                return {
+                    id: track.id,
+                    name: track.name,
+                    artist: track.artists[0].name,
+                    album: track.album.name,
+                    uri: track.uri
+                }
+            }) 
+            return tracklist ;
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export {requestAccessToken, searchSpotify}

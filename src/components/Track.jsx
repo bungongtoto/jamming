@@ -1,16 +1,16 @@
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 import '../styles/track.css'
 
-function Track({ index,track, isPlaylist,  btnFunc}) {
+function Track({ track, isPlaylist,  btnFunc}) {
     const handleClick = () => {
-       isPlaylist ?  btnFunc(index) : btnFunc(track)
+       isPlaylist ?  btnFunc(track.id) : btnFunc(track)
     }
 
 
     return (
         <div className="track">
             <div className='track-left'>
-                <h2>{track.title}</h2>
+                <h2>{track.name}</h2>
                 <p>{track.artist} | <span>{track.album}</span></p>
             </div>
             <div className='track-right'>

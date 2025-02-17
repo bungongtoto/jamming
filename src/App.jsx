@@ -3,52 +3,30 @@ import SearchBar from './components/SearchBar.jsx'
 import SearchResults from './components/SearchResults.jsx'
 import Playlist from './components/Playlist.jsx'
 import { useEffect, useState } from 'react'
-import { requestAccessToken } from './api/api.js'
+import { requestAccessToken, searchSpotify } from './api/api.js'
 
-const Data = [
-  {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  },
-  {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  },
-  {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  },
-  {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  },
-  {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  }, {
-    title: "song title",
-    artist: "Artist",
-    album: "Album"
-  }
-];
+
 
 function App() {
-  const [searchResults, setSearchResults] = useState(Data)
+  const [searchResults, setSearchResults] = useState([])
   const [playlist, setPlaylist] = useState([]);
 
   const handleAddPlaylistTrack = (track) => {
     setPlaylist(prev => [...prev, track])
   }
 
-  const handleRemoveTrack = (trackIndex) => {
+  const handleRemoveTrack = (trackId) => {
     setPlaylist(prev => {
-      return prev.filter((prevTrack, index) => index !== trackIndex);
+      return prev.filter((prevTrack) => prevTrack.id !== trackId);
     });
+  }
+
+  const handleSearch = (searchInput,  artistInput, albumInput) => {
+    searchSpotify(searchInput)
+    .then((response) => {
+      // console.log(response)
+      setSearchResults(response);
+    })
   }
 
   useEffect(() => {
@@ -57,13 +35,13 @@ function App() {
       localStorage.setItem("access_token", response);
     });
     
-  }, [])
+  }, []);
 
 
   return (
     <>
       <main>
-        <SearchBar />
+        <SearchBar searchFunc={handleSearch} />
         <div className='app-bottom'>
           <SearchResults addTrack={handleAddPlaylistTrack} searchResults={searchResults} />
           <Playlist removeTrack={handleRemoveTrack} playlist={playlist} />
