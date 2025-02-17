@@ -1,0 +1,26 @@
+.tracklist {
+    width: 90%;
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 20px;
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer */
+}
+
+.tracklist::-webkit-scrollbar {
+    display: none;
+    /* For Chrome, Safari, and Edge */
+}
+
+.tracklist ul {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 0;
+}

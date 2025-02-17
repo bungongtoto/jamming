@@ -1,0 +1,15 @@
+.app-bottom {
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.search-results, .playlist {
+    margin: 0;
+    padding: 0;
+    width: 40vw;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+}

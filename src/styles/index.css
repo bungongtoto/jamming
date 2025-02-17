@@ -1,3 +1,22 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --primary-color: black;
+  --secondary-color: rgb(38, 38, 38);
+}
+
+* {
+  background-color: black;
+  color: white;
+}
+
+input {
+  margin: 0 20px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  background-color: var(--secondary-color);
+  border-right: none;
+}
+
+button {
+  font-size: 1.5rem;
 }

@@ -1,0 +1,14 @@
+.playlist-from {
+    width: 100%;
+    height: 10%;
+    background-color: transparent;
+}
+
+#playlistName{
+    width: 70%;
+}
+
+#playlistName:focus {
+    outline: none;
+    border-bottom-color: white;
+}
