@@ -1,17 +1,16 @@
-import { useState } from "react";
 import "../styles/tracklist.css";
 import Track from "./Track.jsx";
 
-function Tracklist({isPlaylist}) {
-    const [tracklist, setTracklist] = useState([])
+function Tracklist({ tracklist, isPlaylist, addTrack }) {
+
+
+
     return (
         <div className="tracklist">
             <ul>
-                <Track isPlaylist={isPlaylist} />
-                <Track isPlaylist={isPlaylist} />
-                <Track isPlaylist={isPlaylist} />
-                <Track isPlaylist={isPlaylist} />
-                <Track isPlaylist={isPlaylist} />
+                {tracklist.map((track, index) => {
+                    return <Track  key={index} track={track} isPlaylist={isPlaylist} addTrack={addTrack} />;
+                })}
             </ul>
         </div>
     );
