@@ -4,27 +4,27 @@ import SearchResults from './components/SearchResults.jsx'
 import Playlist from './components/Playlist.jsx'
 import { useState } from 'react'
 
- const Data = [
+const Data = [
   {
     title: "song title",
     artist: "Artist",
     album: "Album"
-  }, 
+  },
   {
     title: "song title",
     artist: "Artist",
     album: "Album"
-  }, 
+  },
   {
     title: "song title",
     artist: "Artist",
     album: "Album"
-  }, 
+  },
   {
     title: "song title",
     artist: "Artist",
     album: "Album"
-  }, 
+  },
   {
     title: "song title",
     artist: "Artist",
@@ -41,8 +41,13 @@ function App() {
   const [playlist, setPlaylist] = useState([]);
 
   const handleAddPlaylistTrack = (track) => {
-    console.log("i am clicked")
     setPlaylist(prev => [...prev, track])
+  }
+
+  const handleRemoveTrack = (trackIndex) => {
+    setPlaylist(prev => {
+      return prev.filter((prevTrack, index) => index !== trackIndex);
+    });
   }
 
 
@@ -51,8 +56,8 @@ function App() {
       <main>
         <SearchBar />
         <div className='app-bottom'>
-          <SearchResults addTrack={handleAddPlaylistTrack}  searchResults={searchResults} />
-          <Playlist playlist={playlist} />
+          <SearchResults addTrack={handleAddPlaylistTrack} searchResults={searchResults} />
+          <Playlist removeTrack={handleRemoveTrack} playlist={playlist} />
         </div>
       </main>
     </>
