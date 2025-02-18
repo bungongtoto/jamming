@@ -3,7 +3,7 @@ import SearchBar from './components/SearchBar.jsx'
 import SearchResults from './components/SearchResults.jsx'
 import Playlist from './components/Playlist.jsx'
 import { useEffect, useState } from 'react'
-import { requestAccessToken, searchSpotify } from './api/api.js'
+import { addTracksToPlaylist, requestAccessToken, searchSpotify } from './api/api.js'
 
 
 
@@ -21,20 +21,28 @@ function App() {
     });
   }
 
-  const handleSearch = (searchInput,  artistInput, albumInput) => {
+  const handleSearch = (searchInput) => {
     searchSpotify(searchInput)
-    .then((response) => {
-      // console.log(response)
-      setSearchResults(response);
-    })
+      .then((response) => {
+        // console.log(response)
+        setSearchResults(response);
+      })
+  }
+
+  const handleAddPlaylist = (uris, name) => {
+    addTracksToPlaylist(uris, name)
+      .then((response) => {
+        if (response) {
+          alert(`New Playlist with ID: ${response} added successfully`);
+          setPlaylist([]);
+          setSearchResults([])
+        }
+      })
   }
 
   useEffect(() => {
-    requestAccessToken().then((response) => {
-      console.log(response)
-      localStorage.setItem("access_token", response);
-    });
-    
+    requestAccessToken();
+
   }, []);
 
 
@@ -44,7 +52,7 @@ function App() {
         <SearchBar searchFunc={handleSearch} />
         <div className='app-bottom'>
           <SearchResults addTrack={handleAddPlaylistTrack} searchResults={searchResults} />
-          <Playlist removeTrack={handleRemoveTrack} playlist={playlist} />
+          <Playlist removeTrack={handleRemoveTrack} addPlaylist={handleAddPlaylist} playlist={playlist} />
         </div>
       </main>
     </>

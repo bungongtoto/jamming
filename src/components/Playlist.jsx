@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import '../styles/playlist.css'
 import Tracklist from './Tracklist.jsx';
+import { FaSave } from 'react-icons/fa';
 
-function Playlist({ playlist, removeTrack }) {
+function Playlist({ playlist, removeTrack, addPlaylist }) {
+    const [name, setName] = useState("");
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let uris = playlist.map((track) => track.uri);
+        addPlaylist(uris, name);
+        setName("");
+    }
     return (
         <div className="playlist">
-            <form className='playlist-from'>
-                <input className='' type="text" name="playlistName" id="playlistName" placeholder='Playlist' />
-                <button type='submit'>SAVE</button>
+            <form onSubmit={handleSubmit} className='playlist-from'>
+                <input value={name} onChange={(e) => setName(e.target.value)} className='' type="text" name="playlistName" id="playlistName" placeholder='Playlist' required />
+                <button type='submit' title='Save to Spotify'><FaSave /></button>
             </form>
             <Tracklist btnFunc={removeTrack} tracklist={playlist} isPlaylist={true} />
         </div>

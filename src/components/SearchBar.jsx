@@ -10,7 +10,8 @@ function SearchBar({ searchFunc }) {
     const handleSearchForm = (e) => {
         e.preventDefault();
         if (search !== "") {
-            searchFunc(search, artist, album)
+            searchFunc(search);
+            setSearch("")
         }
     }
     return (
